@@ -16,8 +16,8 @@ DEST = "/Users/stan.park712/Library/CloudStorage/Box-Box/jp464/yinLab/yinlab_bso
 DEST += "/filtered_frame_transitions.csv"
 df = pd.read_csv(FILE)
 
-label = int(input("Enter label to filter for"))
+label = input("Enter label to filter for").split(" ")
+label = list(map(lambda x: int(x), label))
 
-
-df = df[df["next_label"] == label]
+df = df[df["next_label"].isin(label)]
 df.to_csv(DEST)
