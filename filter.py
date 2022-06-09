@@ -14,9 +14,9 @@ import pathlib
 
 # File and Destination path
 PATH = pathlib.Path(__file__).parent.resolve()
-fname = "/output/Ai14-03_68_RD200_RS35_Trainingday5_cam_frame_transitions.csv"
-FILE = str(PATH) + fname
-DEST = str(PATH) + "/output/" + "filtered_frame_transitions.csv"
+fname = input("Enter the file name you want to filter. Include the extension.")
+FILE = str(PATH) + "/output/" + fname
+DEST = str(PATH) + "/output/" + fname[0:len(fname) - 5] + "_filtered_frame_transitions.csv"
 
 df = pd.read_csv(FILE)
 

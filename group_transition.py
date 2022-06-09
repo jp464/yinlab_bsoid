@@ -17,10 +17,9 @@ import pathlib
 
 # File and Destination path
 PATH = pathlib.Path(__file__).parent.resolve()
-fname = "/data/Ai14-03_68_RD200_RS35_Trainingday5_camP.csv"
-FILE = str(PATH) + fname
+fname = input("Enter the name of file you want to analyze. Inclue the exntesion name.")
+FILE = str(PATH) + "/data/" + fname
 
-DEST = str(PATH) + "/output" + fname[5:len(fname) - 5] + "_frame_transitions.csv"
 
 
 
@@ -28,8 +27,10 @@ DEST = str(PATH) + "/output" + fname[5:len(fname) - 5] + "_frame_transitions.csv
 df = pd.read_csv(FILE)
 all_labels = df.iloc[2:, 1].to_list()
 
+slabel = input("Enter label")
+label = int(slabel)
 
-label = int(input("Enter label"))
+DEST = str(PATH) + "/output/" + fname[0:len(fname) - 5] + "_" + slabel + "_frame_transitions.csv"
 
 initial = []
 final = []
