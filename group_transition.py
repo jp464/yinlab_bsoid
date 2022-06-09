@@ -13,15 +13,21 @@
 # ===================================================================================
 
 import pandas as pd 
+import pathlib
 
 # File and Destination path
-FILE = "/Users/stan.park712/Library/CloudStorage/Box-Box/jp464/yinLab/yinlab_bsoid/test_data/Ai14-03_68_RD200_RS35_Trainingday5_camP.csv"
-DEST = "/Users/stan.park712/Library/CloudStorage/Box-Box/jp464/yinLab/yinlab_bsoid/test_data"
-DEST += "/frame_transitions.csv" # modify output file name here
+PATH = pathlib.Path(__file__).parent.resolve()
+fname = "/data/Ai14-03_68_RD200_RS35_Trainingday5_camP.csv"
+FILE = str(PATH) + fname
+
+DEST = str(PATH) + "/output" + fname[5:len(fname) - 5] + "_frame_transitions.csv"
+
+
 
 # Read file and extract list of labels for all frames
 df = pd.read_csv(FILE)
-all_labels = df.iloc[:, 1].to_list()
+all_labels = df.iloc[2:, 1].to_list()
+
 
 label = int(input("Enter label"))
 
@@ -49,10 +55,16 @@ for i in range(len(all_labels)):
             final.append(i)
             next.append(all_labels[i])
 
+
 # Create data frame of initial and final frames of label, and next label
 d = {'initial': initial, 'final': final, 'next_label' : next}
 df = pd.DataFrame(data=d)
+
+df_initial = df[["initial", "next_label"]]
+df_intervals = df.loc[df["final"] - df["initial"] > 0]
+
 df.to_csv(DEST)
+
 
 # Calculate frequencies of next labels 
 freq = df["next_label"].value_counts(normalize = True)
